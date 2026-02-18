@@ -1,5 +1,5 @@
 import { computed, ref, shallowRef, toValue, watch, type MaybeRefOrGetter } from 'vue';
-import { RowSelection } from './types';
+import { RowSelection, SelectedRowsResponse, SelectionMode } from './types';
 
 export function useRowSelection<T extends string | number>(pageRowIds: MaybeRefOrGetter<T[]>, totalRows: MaybeRefOrGetter<number>): RowSelection<T> {
     const selectedRows = shallowRef(new Set<T>());
@@ -63,6 +63,16 @@ export function useRowSelection<T extends string | number>(pageRowIds: MaybeRefO
         selectedRows.value = new Set();
     };
 
+    const getSelectedIds = () => Array.from(selectedRows.value);
+
+    const getSelectedRowState = (): SelectedRowsResponse<T> => {
+        return {
+            mode: allRowsSelected.value ? SelectionMode.EXCLUDE : SelectionMode.INCLUDE,
+            ids: getSelectedIds(),
+            totalCount: selectedRowCount.value,
+        };
+    };
+
     watch(
         () => toValue(pageRowIds),
         newPageIds => {
@@ -89,5 +99,7 @@ export function useRowSelection<T extends string | number>(pageRowIds: MaybeRefO
         toggleRowState,
         togglePageRows,
         deSelectAllRows,
+        getSelectedIds,
+        getSelectedRowState,
     } as RowSelection<T>;
 }

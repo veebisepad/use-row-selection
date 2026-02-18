@@ -1,5 +1,19 @@
 import type { ComputedRef, Ref, ShallowRef } from 'vue';
 
+export enum SelectionMode {
+    INCLUDE = 'include',
+    EXCLUDE = 'exclude',
+}
+
+export interface SelectedRowsResponse<T extends string | number> {
+    /** Selection mode: 'include' (specific rows) or 'exclude' (all except specific rows) */
+    mode: SelectionMode;
+    /** Array of selected or excluded row IDs */
+    ids: T[];
+    /** Total count of selected rows */
+    totalCount: number;
+}
+
 export interface RowSelection<T extends string | number> {
     /**
      * The underlying Set of row IDs.
@@ -39,4 +53,7 @@ export interface RowSelection<T extends string | number> {
 
     /** Clears all selection state and exits "Select All" mode if active. */
     deSelectAllRows: () => void;
+
+    /** Returns the current selection state in a format suitable for external use (e.g., API submission) or bulk actions. */
+    getSelectedRowState: () => SelectedRowsResponse<T>;
 }
