@@ -1,0 +1,31 @@
+{
+    "name": "@veebisepad/use-row-selection",
+    "version": "0.0.1",
+    "description": "Composable for managing table row checkbox state in Vue 3.",
+    "type": "module",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "require": "./dist/index.cjs"
+        }
+    },
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "dev": "tsup --watch",
+        "build": "tsup"
+    },
+    "peerDependencies": {
+        "vue": "^3.3.0"
+    },
+    "devDependencies": {
+        "tsup": "^8.5.1",
+        "typescript": "^5.0.0",
+        "vue": "^3.3.4"
+    }
+}
